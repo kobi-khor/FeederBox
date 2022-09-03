@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,13 +16,13 @@ import java.sql.Timestamp;
 public class URL {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
     private String url;
 
+    @CreatedDate
     @Column(name = "date_created")
-    private Timestamp timestamp;
+    private Timestamp created_date;
 
 
 
