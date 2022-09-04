@@ -11,6 +11,11 @@ public class URLService {
     @Autowired
     URLRepository urlRepository;
 
+    /**
+     * saves url on DB
+     * @param url
+     * @return void
+     */
     public void save(URL url){
         urlRepository.save(url);
     }

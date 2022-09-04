@@ -26,6 +26,11 @@ public class URLResurce {
         return "pong";
     }
 
+    /**
+     * submit url and save it on DB then returns ok response
+     * @param url
+     * @return ResponseEntity.ok().build() response
+     */
     @PostMapping
     public ResponseEntity<?> submitURL(@RequestBody URL url){
         url.setId(URL_UUD_PREFIX + UUID.randomUUID().toString());
