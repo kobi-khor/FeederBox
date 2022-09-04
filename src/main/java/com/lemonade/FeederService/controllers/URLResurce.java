@@ -34,8 +34,9 @@ public class URLResurce {
     @PostMapping
     public ResponseEntity<?> submitURL(@RequestBody URL url){
         url.setId(URL_UUD_PREFIX + UUID.randomUUID().toString());
+        url.setCreated_date(new Timestamp(System.currentTimeMillis()));
         urlService.save(url);
-        System.out.println(url);
+        System.out.println("recived URL:" + url.toString());
         return ResponseEntity.ok().build();
 
     }

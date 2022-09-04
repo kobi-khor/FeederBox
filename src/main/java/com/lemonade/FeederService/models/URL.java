@@ -11,7 +11,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(	name = "url_collection")
 public class URL {
 
@@ -20,7 +23,6 @@ public class URL {
 
     private String url;
 
-    @CreatedDate
     @Column(name = "date_created")
     private Timestamp created_date;
 
