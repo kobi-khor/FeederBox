@@ -11,7 +11,11 @@ public class KafkaService {
     @Autowired
     private KafkaTemplate<String,String> kafkaTemplate;
 
-
+    /**
+     * invoke send() function from KafkaTemplate
+     * @param String topic, String massage
+     * @return void
+     */
     public void send(String topic, String massage){
         kafkaTemplate.send(topic,massage);
     }
