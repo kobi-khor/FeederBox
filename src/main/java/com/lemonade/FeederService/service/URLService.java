@@ -10,13 +10,16 @@ public class URLService {
 
     @Autowired
     URLRepository urlRepository;
+    @Autowired
+    KafkaService kafkaService;
 
     /**
-     * saves url on DB
+     * saves url on DB and sends it to kafkaService
      * @param url
      * @return void
      */
     public void save(URL url){
         urlRepository.save(url);
+        kafkaService.send("html_topic", url.getUrl());
     }
 }
