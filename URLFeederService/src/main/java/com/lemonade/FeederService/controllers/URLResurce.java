@@ -1,8 +1,9 @@
 package com.lemonade.FeederService.controllers;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.lemonade.FeederService.models.URL;
 import com.lemonade.FeederService.service.URLService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import static com.lemonade.FeederService.common.Constants.URL_UUD_PREFIX;
 
 @RestController
 public class URLResurce {
+
+    private static final Logger LOG = LoggerFactory.getLogger(URLResurce.class);
 
     @Autowired
     private URLService urlService;
@@ -36,7 +39,7 @@ public class URLResurce {
         url.setId(URL_UUD_PREFIX + UUID.randomUUID().toString());
         url.setCreated_date(new Timestamp(System.currentTimeMillis()));
         urlService.save(url);
-        System.out.println("recived URL:" + url.toString());
+        System.out.println("received URL: " + url.getUrl());
         return ResponseEntity.ok().build();
 
     }
