@@ -1,24 +1,25 @@
-import time
-from locust import HttpUser, task, between
 
-class QuickstartUser(HttpUser):
-    wait_time = between(1, 5)
+from locust import HttpUser, SequentialTaskSet, between, task
+import json
 
+
+class User(HttpUser):
     @task
-    def hello_world(self):
-        self.client.get("/ping")
+    class SequenceOfTasks(SequentialTaskSet):
+        wait_time = between(1, 5)
 
-# class Test_1(TaskSet):
-#     @task(1)
-#     def users(self):
-#         response = self.client.post("/posts", json=
-#         {
-#         "url": "www.Google.com"
-#         }
-#         )
-#         # json_var = response.json()
-#         # request_id = json_var['title']
-#         # print 'Post title is ' + request_id
+        @task
+        def ping(self):
+            self.client.get("/ping")
+
+        @task
+        def post(self):
+            self.client.post("/", json=
+            {
+                 "url": "https://www.Arseal.com"
+            }
+            )
 
 
-#  /Users/kobihorshid/Desktop/FeederBox/locust-tests/locust-tests
+#   locust --host=http://localhost:8085 --locustfile locust.py
+
