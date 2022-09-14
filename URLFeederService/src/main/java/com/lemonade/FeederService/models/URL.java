@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -26,6 +25,14 @@ public class URL {
     @Column(name = "date_created")
     private Timestamp created_date;
 
+    @Column(name = "times_processed")
+    private Integer timesProcessed;
+
+    @Column(name = "content_type")
+    private String contentType;
+
+    @Column(name = "last_processed")
+    private Timestamp lastProcessed;
 
 
 }

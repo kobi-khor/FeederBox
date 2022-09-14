@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import static com.lemonade.FeederService.common.Constants.URL_UUD_PREFIX;
+import static com.lemonade.FeederService.common.Constants.URL_UUID_PREFIX;
 
 @RestController
 public class URLResurce {
@@ -36,12 +36,14 @@ public class URLResurce {
      */
     @PostMapping
     public ResponseEntity<?> submitURL(@RequestBody URL url){
-        url.setId(URL_UUD_PREFIX + UUID.randomUUID().toString());
+        long startTime = System.currentTimeMillis();
+        url.setId(URL_UUID_PREFIX + UUID.randomUUID().toString());
         url.setCreated_date(new Timestamp(System.currentTimeMillis()));
+        url.setTimesProcessed(0);
+        LOG.info("URL received: {}",url.getUrl());
         urlService.save(url);
-        System.out.println("received URL: " + url.getUrl());
+        LOG.info("Request processed in {} mills",(System.currentTimeMillis() - startTime));
         return ResponseEntity.ok().build();
-
     }
 
 }
