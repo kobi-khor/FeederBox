@@ -35,10 +35,10 @@ public class URLService {
      * saves url on DB and sends it to kafkaService
      * @param url URL
      */
-//    @Async
+    @Async
     public void save(URL url){
         try {
-            LOG.info("--------- {}", Thread.currentThread().getName());
+            LOG.info("------- {} -------", Thread.currentThread().getName());
             URL existingURL = urlRepository.findByUrl(url.getUrl());
             Optional<String> optContentType = Optional.empty();
             if (existingURL != null){
@@ -64,11 +64,8 @@ public class URLService {
                 LOG.warn("Content type {} not mapped", optContentType.get());
                 return;
             }
-            LOG.info("before topic call optTopic.get()");
             String topic = optTopic.get();
-            LOG.info("topic: {}", topic);
             if (url.getContentType() == null || url.getContentType().isEmpty()) {
-                LOG.info("url.getContentType() == null || url.getContentType().isEmpty()");
                 url.setContentType(optContentType.get());
             }
             LOG.info("URL: {}, sending to topic: {}", url.getUrl(), topic);
@@ -124,11 +121,9 @@ public class URLService {
         String contentType = rawContentType.split(";")[0];
         LOG.info("Key: {}", contentType);
         if (kafkaTopics.containsKey(contentType)) {
-            LOG.info("Key: {} Found as value", contentType);
             return Optional.of(kafkaTopics.get(contentType));
         }
-        LOG.warn("Key {} does not appears onn kafka topics");
-        LOG.info("topics: {}", kafkaTopics.toString());
+        LOG.info("Key: {} not found in existing topics", contentType);
         return Optional.empty();
     }
 
