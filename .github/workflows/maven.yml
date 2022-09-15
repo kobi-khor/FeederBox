@@ -6,13 +6,10 @@ name: CI/CD Workflow
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  paths: [ "URLFeederService/**" ]
-  defaults:
-    run:
-      working-directory: URLFeederService
+    paths: [ "URLFeederService/**" ]
+defaults:
+  run:
+    working-directory: URLFeederService
 
 jobs:
   build:
