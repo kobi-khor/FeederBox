@@ -13,7 +13,7 @@ public class KafkaService {
 
     /**
      * invoke send() function from KafkaTemplate
-     * @param String topic, String massage
+     * @param topic, String massage
      * @return void
      */
     public void send(String topic, String massage){
