@@ -1,8 +1,0 @@
-com/lemonade/FeederService/FeederServiceApplication.class
-com/lemonade/FeederService/service/URLService.class
-com/lemonade/FeederService/controllers/URLResurce.class
-com/lemonade/FeederService/service/KafkaService.class
-com/lemonade/FeederService/models/URL.class
-com/lemonade/FeederService/repository/URLRepository.class
-com/lemonade/FeederService/config/URLProcessorThreadPoolConfig.class
-com/lemonade/FeederService/common/Constants.class
