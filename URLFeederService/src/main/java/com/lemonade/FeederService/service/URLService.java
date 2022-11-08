@@ -22,15 +22,18 @@ public class URLService {
     private static final Logger LOG = LoggerFactory.getLogger(URLService.class);
 
     @Value("#{${com.lemonade.urlfeederservice.topics}}")
-    Map<String, String> kafkaTopics;
+    private Map<String, String> kafkaTopics;
     @Autowired
-    URLRepository urlRepository;
+    private URLRepository urlRepository;
 
     @Autowired
-    KafkaService kafkaService;
+    private KafkaService kafkaService;
 
     @Value("#{${com.lemonade.FeederService.service.cooldown}}")
-    Integer cooldown;
+    private Integer cooldown;
+
+    @Autowired
+    private CacheService cacheService;
 
     /**
      * saves url on DB and sends it to kafkaService
@@ -42,12 +45,17 @@ public class URLService {
         for(URL url: urls) {
             try {
                 LOG.info("------- {} -------", Thread.currentThread().getName());
+                // Check if url exist in scache memory
+                if (cacheService.get(url.getUrl()) != null){
+                    return;
+                }
                 URL existingURL = urlRepository.findByUrl(url.getUrl());
                 Optional<String> optContentType = Optional.empty();
                 if (existingURL != null) {
                     // Allow processing if the url has been processed more than 7 days ago (cooldown value from properties)
                     if (existingURL.getLastProcessed().getTime() + TimeUnit.DAYS.toMillis(cooldown) > System.currentTimeMillis()) {
                         LOG.info("URL {} already processed on {}", existingURL.getUrl(), existingURL.getLastProcessed().getTime());
+                        cacheService.set(existingURL);
                         return;
                     }
                     url = existingURL;
@@ -73,6 +81,7 @@ public class URLService {
                 }
                 LOG.info("URL: {}, sending to topic: {}", url.getUrl(), topic);
                 kafkaService.send(topic, url.getUrl());
+                cacheService.set(url);
                 urlRepository.save(url);
             } catch (IOException ex) {
                 LOG.error("Exception: ", ex);
