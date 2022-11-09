@@ -28,19 +28,28 @@ public class CacheService {
 
     private StatefulRedisConnection<String, URL> statefulRedisConnection = null;
 
+    /**
+     * get URL from cache if exits
+     * @param key, String
+     * @return url
+     */
     public URL get(String key){
         URL url = statefulRedisConnection.sync().get(key);
         if (url != null){
             LOG.info("Serving from cach, for key: {}",key);
         } else {
-            LOG.info("Cach missed, for key: {}",key);
+            LOG.info("Cache missed, for key: {}",key);
         }
         return url;
     }
 
+    /**
+     * sets ttl for received URL
+     * @param url, URL
+     * @return void
+     */
     public void set(URL url){
-//        Long ttlSeconds = TimeUnit.DAYS.toSeconds(this.ttl);
-        Long ttlSeconds = 30L;
+        long ttlSeconds = TimeUnit.DAYS.toSeconds(this.ttl);
         statefulRedisConnection.sync().setex(url.getUrl(), ttlSeconds, url);
     }
 
