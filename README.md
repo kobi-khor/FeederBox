@@ -10,7 +10,8 @@
 -Redis  
 -NGINX  
 -Cassandra  
--Kubernetes  
+-Kubernetes
+-Locust.io load testing
 
 
 
