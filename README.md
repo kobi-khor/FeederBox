@@ -5,13 +5,14 @@
 -Spring boot  
 -Docker  
 -PostgresSQL  
+-Locust.io Load Testing  
 -Kafka  
 -zookeeper   
 -Redis  
 -NGINX  
 -Cassandra  
 -Kubernetes
--Locust.io load testing
+
 
 
 
